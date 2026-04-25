@@ -1,5 +1,5 @@
 import os
-import shutil
+from shutil import copyfile
 
 
 def move_file(move_command: str) -> None:
@@ -14,6 +14,8 @@ def move_file(move_command: str) -> None:
 
     _, source_file, dest_file = parts
 
+    is_dest_directory = dest_file[-1] == "/"
+
     # Check if the source file exists
     if not os.path.isfile(source_file):
         print(f"Source file '{source_file}' does not exist.")
@@ -27,9 +29,9 @@ def move_file(move_command: str) -> None:
 
         # If the destination is a directory,
         # move the file into that directory
-        if dest_file[-1] == "/":
+        if is_dest_directory:
             dest_file = os.path.join(dest_dir, os.path.basename(source_file))
 
     # Move the file
-    shutil.copyfile(source_file, dest_file)
+    copyfile(source_file, dest_file)
     os.remove(source_file)
