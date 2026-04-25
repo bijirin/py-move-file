@@ -25,7 +25,7 @@ def move_file(move_command: str) -> None:
     if dest_dir and not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
 
-        # If the destination is a directory, 
+        # If the destination is a directory,
         # move the file into that directory
         if dest_file == dest_dir + "/":
             dest_file = dest_dir + "/" + os.path.basename(source_file)
