@@ -1,4 +1,5 @@
 import os
+import shutil
 
 
 def move_file(move_command: str) -> None:
@@ -11,8 +12,7 @@ def move_file(move_command: str) -> None:
         print("Invalid command format. Use: mv <source> <destination>")
         return
 
-    source_file = parts[1]
-    dest_file = parts[2]
+    _, source_file, dest_file = parts
 
     # Check if the source file exists
     if not os.path.isfile(source_file):
@@ -27,8 +27,9 @@ def move_file(move_command: str) -> None:
 
         # If the destination is a directory,
         # move the file into that directory
-        if dest_file == dest_dir + "/":
-            dest_file = dest_dir + "/" + os.path.basename(source_file)
+        if dest_file[-1] == "/":
+            dest_file = os.path.join(dest_dir, os.path.basename(source_file))
 
     # Move the file
-    os.rename(source_file, dest_file)
+    shutil.copyfile(source_file, dest_file)
+    os.remove(source_file)
